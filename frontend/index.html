@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocIntel | Advanced Document Intelligence</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="ph-fill ph-brain"></i>
+                <span>DocIntel</span>
+            </div>
+
+            <!-- Session Management -->
+            <div class="session-section">
+                <div class="session-info">
+                    <div class="session-label">Current Session</div>
+                    <div class="session-id" id="session-id-display">No session</div>
+                </div>
+                <button class="btn-new-session" id="new-session-btn">
+                    <i class="ph ph-plus-circle"></i>
+                    <span>New Session</span>
+                </button>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-target="tax-section">
+                    <i class="ph ph-bank"></i>
+                    <span>Tax Assistant</span>
+                </button>
+                <div class="divider"></div>
+                <button class="nav-item" data-target="utilities-section">
+                    <i class="ph ph-wrench"></i>
+                    <span>Utilities</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="nav-item" data-target="settings-section">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- SECTION: TAX (Now Default) -->
+            <section id="tax-section" class="view active">
+
+
+                <header class="section-header">
+                    <h1>Tax Assistant</h1>
+                    <p>AI-powered tax regulation analysis and document querying.</p>
+                </header>
+
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="tax-chat">
+                        <i class="ph ph-chat-circle-text"></i> Chat & Audit
+                    </button>
+                    <button class="tab-btn" data-tab="tax-data">
+                        <i class="ph ph-files"></i> Data Ingestion
+                    </button>
+                    <button class="tab-btn" data-tab="tax-reconcile">
+                        <i class="ph ph-receipt"></i> Reconciliation
+                    </button>
+                    <button class="tab-btn" data-tab="tax-ingest">
+                        <i class="ph ph-book-bookmark"></i> Knowledge Base
+                    </button>
+                </div>
+
+                <!-- Tab: Chat -->
+                <div id="tax-chat" class="tab-content active">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message system">
+                                <div class="avatar"><i class="ph-fill ph-robot"></i></div>
+                                <div class="bubble">
+                                    Hello! I can help you verify transactions against official tax rules. Upload your
+                                    documents or ask me a question.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <button class="icon-btn" id="chat-attach-btn" title="Upload Document Context">
+                                <i class="ph ph-paperclip"></i>
+                            </button>
+                            <input type="file" id="chat-file-input" multiple hidden>
+
+                            <div class="output-format-toggle" title="Output Format">
+                                <button class="format-btn active" data-format="text">
+                                    <i class="ph ph-text-aa"></i>
+                                    <span>Text</span>
+                                </button>
+                                <button class="format-btn" data-format="json">
+                                    <i class="ph ph-code"></i>
+                                    <span>JSON</span>
+                                </button>
+                            </div>
+
+                            <textarea id="chat-input"
+                                placeholder="Ask about tax deductibility, rules, or specific invoices..."
+                                rows="1"></textarea>
+
+                            <button class="btn-icon-primary" id="chat-send-btn">
+                                <i class="ph-fill ph-paper-plane-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Ingest Data (User Docs) -->
+                <div id="tax-data" class="tab-content">
+                    <div class="card upload-card">
+                        <div class="drop-zone" id="tax-drop-zone">
+                            <i class="ph ph-files"></i>
+                            <h3>Upload Financial Documents</h3>
+                            <p>Drag & drop invoices, receipts, or bank statements here</p>
+                            <p class="text-sm text-secondary" style="margin-top:8px;">Supports PDF, CSV, DOCX,
+                                Images
+                            </p>
+                            <input type="file" id="tax-files-input" multiple hidden>
+                        </div>
+
+                        <div id="tax-file-list" class="file-list hidden">
+                            <!-- File items will go here -->
+                        </div>
+
+                        <div class="actions-row" style="margin-top: 20px; display: flex; justify-content: flex-end;">
+                            <button class="btn btn-primary" id="tax-ingest-btn" disabled>
+                                <i class="ph ph-upload-simple"></i> Ingest Files
+                            </button>
+                        </div>
+
+                        <div id="tax-ingest-status" class="status-msg"></div>
+                    </div>
+                </div>
+
+                <!-- Tab: Reconciliation -->
+                <div id="tax-reconcile" class="tab-content">
+                    <div class="card">
+                        <div class="section-header" style="margin-bottom: 24px;">
+                            <h2>Transaction Verification</h2>
+                            <p>Automatically match uploaded invoices against bank statements to detect
+                                discrepancies.
+                            </p>
+                        </div>
+
+                        <button class="btn btn-primary" id="run-reconcile-btn">
+                            <i class="ph ph-check-circle"></i> Run Reconciliation
+                        </button>
+
+                        <div id="reconcile-status" class="status-msg"></div>
+                    </div>
+
+                    <div id="reconcile-result" class="card result-card hidden">
+                        <div class="result-header">
+                            <h3>Analysis Report</h3>
+                        </div>
+                        <div class="result-body" id="reconcile-output" style="white-space: pre-wrap; line-height: 1.6;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Ingest -->
+                <div id="tax-ingest" class="tab-content">
+                    <div class="card">
+                        <h3>Update Tax Knowledge Base</h3>
+                        <p class="text-secondary">Upload the latest official Tax Rulebook (PDF) to the global
+                            knowledge
+                            base.</p>
+
+                        <div class="input-group">
+                            <input type="file" id="tax-rules-input" accept=".pdf" class="file-control">
+                            <button class="btn btn-secondary" id="tax-upload-rules-btn">
+                                <i class="ph ph-upload"></i> Upload Rulebook
+                            </button>
+                        </div>
+                        <div id="tax-upload-status" class="status-msg"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: UTILITIES (REST) -->
+            <section id="utilities-section" class="view">
+                <header class="section-header">
+                    <h1>Utilities</h1>
+                    <p>General purpose document parsing and classification tools.</p>
+                </header>
+
+                <div class="grid-container">
+                    <!-- CAT Classification Tool -->
+                    <div class="card tool-card">
+                        <div class="tool-icon"><i class="ph ph-files"></i></div>
+                        <h3>CAT Classification</h3>
+                        <p>Upload HTML documents to automatically classify their content type.</p>
+
+                        <div class="tool-actions">
+                            <div class="drop-zone-small" id="cat-drop-zone">
+                                <i class="ph ph-upload-simple"></i>
+                                <span>Drag & Drop HTML file or click to browse</span>
+                                <input type="file" id="cat-file-input" accept=".html,.htm" hidden>
+                            </div>
+                            <div id="cat-file-preview" class="file-preview hidden">
+                                <i class="ph-fill ph-file-html"></i>
+                                <span id="cat-filename">filename.html</span>
+                                <button class="icon-btn" id="cat-remove-file"><i class="ph ph-x"></i></button>
+                            </div>
+                            <button class="btn btn-primary" id="cat-classify-btn" disabled>
+                                <i class="ph ph-magic-wand"></i> Run Classification
+                            </button>
+                        </div>
+                        <div id="cat-result" class="result-inline hidden">
+                            <strong>Result:</strong> <span id="cat-result-class">--</span>
+                        </div>
+                    </div>
+
+                    <!-- General Parser Tool -->
+                    <div class="card tool-card">
+                        <div class="tool-icon"><i class="ph ph-file-pdf"></i></div>
+                        <h3>General Parser</h3>
+                        <p>Convert PDF, DOCX, or PPTX into clean Markdown and structured assets.</p>
+
+                        <div class="tool-actions">
+                            <input type="file" id="parser-file-input" hidden>
+                            <button class="btn btn-outline"
+                                onclick="document.getElementById('parser-file-input').click()">
+                                Select File
+                            </button>
+                            <button class="btn btn-primary" id="parser-run-btn" disabled>
+                                Parse & Download ZIP
+                            </button>
+                        </div>
+                        <div id="parser-status" class="status-msg"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: SETTINGS -->
+            <section id="settings-section" class="view">
+                <header class="section-header">
+                    <h1>Settings</h1>
+                </header>
+
+                <div class="card">
+                    <h3>API Configuration</h3>
+                    <div class="form-group">
+                        <label for="api-key">Backend API Key</label>
+                        <div class="password-input">
+                            <input type="password" id="api-key" placeholder="Enter your API Key">
+                            <button class="icon-btn toggle-visibility"><i class="ph ph-eye"></i></button>
+                        </div>
+                        <p class="help-text">Required for Classification and Parsing endpoints.</p>
+                    </div>
+                    <div class="form-footer">
+                        <button class="btn btn-primary" id="save-settings-btn">Save Configuration</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
