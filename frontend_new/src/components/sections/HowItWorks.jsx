@@ -88,7 +88,7 @@ const MultiFormatUploadDemo = () => {
             </span>
           </h3>
           <p className="text-base text-text-secondary leading-relaxed">
-            Simply drag and drop your documents — PDFs, images, spreadsheets, scans.
+            Simply drag and drop your documents  PDFs, images, spreadsheets, scans.
             Our AI instantly processes and extracts structured data in real-time.
           </p>
         </div>
@@ -154,9 +154,8 @@ const MultiFormatUploadDemo = () => {
                   className="bg-background-subtle border border-border rounded-xl p-4 flex items-center gap-4"
                 >
                   <div
-                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                      isComplete ? "bg-green-500/20" : "bg-accent-blue/20"
-                    }`}
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${isComplete ? "bg-green-500/20" : "bg-accent-blue/20"
+                      }`}
                   >
                     {isComplete ? (
                       <CheckCircle className="w-5 h-5 text-green-500" />
@@ -266,9 +265,8 @@ const IntelligentParsingDemo = () => {
               return (
                 <div
                   key={feature.label}
-                  className={`relative p-4 rounded-xl border transition-all duration-300 ${
-                    isDetected ? "bg-accent-blue/5 border-accent-blue" : "bg-background-subtle border-border"
-                  }`}
+                  className={`relative p-4 rounded-xl border transition-all duration-300 ${isDetected ? "bg-accent-blue/5 border-accent-blue" : "bg-background-subtle border-border"
+                    }`}
                 >
                   {isDetected && (
                     <motion.div
@@ -390,7 +388,7 @@ const AIUnderstandingDemo = () => {
             </span>
           </h3>
           <p className="text-base text-text-secondary leading-relaxed">
-            Beyond simple text extraction — our AI comprehends context, identifies entities,
+            Beyond simple text extraction  our AI comprehends context, identifies entities,
             classifies documents, and generates intelligent summaries.
           </p>
         </div>
@@ -431,9 +429,8 @@ const AIUnderstandingDemo = () => {
                     key={entity.label}
                     initial={{ opacity: 0.3, scale: 0.95 }}
                     animate={{ opacity: isActive ? 1 : 0.3, scale: isActive ? 1 : 0.95 }}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${
-                      isActive ? entity.color : "bg-background-subtle text-text-muted border-border"
-                    }`}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${isActive ? entity.color : "bg-background-subtle text-text-muted border-border"
+                      }`}
                   >
                     <entity.icon className="w-4 h-4" />
                     <span className="text-sm font-medium">{entity.label}</span>
@@ -539,9 +536,8 @@ const StructuredOutputDemo = () => {
             <motion.div
               key={format.name}
               animate={{ scale: isActive ? 1.05 : 1 }}
-              className={`relative bg-background-card border rounded-3xl p-6 text-center cursor-pointer transition-all duration-300 ${
-                isActive ? "border-accent-blue shadow-elevated" : "border-border"
-              }`}
+              className={`relative bg-background-card border rounded-3xl p-6 text-center cursor-pointer transition-all duration-300 ${isActive ? "border-accent-blue shadow-elevated" : "border-border"
+                }`}
               onClick={() => setActiveFormat(index)}
             >
               {format.popular && (
@@ -551,9 +547,8 @@ const StructuredOutputDemo = () => {
               )}
 
               <div
-                className={`w-14 h-14 mx-auto rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${
-                  isActive ? "bg-accent-blue" : "bg-accent-blue/20"
-                }`}
+                className={`w-14 h-14 mx-auto rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${isActive ? "bg-accent-blue" : "bg-accent-blue/20"
+                  }`}
               >
                 <format.icon className={`w-7 h-7 ${isActive ? "text-white" : "text-accent-blue"}`} />
               </div>
@@ -603,7 +598,7 @@ const timelineData = [
     title: "1. Upload",
     heading: "Multi-Format Upload",
     description:
-      "Drag and drop any document format — PDFs, images, Word, Excel, scanned files, and more. Batch upload up to 20 documents at once with real-time progress tracking.",
+      "Drag and drop any document format  PDFs, images, Word, Excel, scanned files, and more. Batch upload up to 20 documents at once with real-time progress tracking.",
     content: <MultiFormatUploadDemo />,
   },
   {
@@ -624,7 +619,7 @@ const timelineData = [
     title: "4. Export",
     heading: "Structured Output",
     description:
-      "Get clean, validated data in your preferred format — JSON, Excel, Markdown, or PDF. Every output includes confidence scores and processing metadata.",
+      "Get clean, validated data in your preferred format  JSON, Excel, Markdown, or PDF. Every output includes confidence scores and processing metadata.",
     content: <StructuredOutputDemo />,
   },
 ];

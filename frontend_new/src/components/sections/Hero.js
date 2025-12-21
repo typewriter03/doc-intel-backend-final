@@ -53,7 +53,7 @@ export default function Hero() {
                 d="M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z"
                 strokeWidth="0.5"
                 stroke="currentColor"
-                                className="text-black/15"
+                className="text-black/15"
 
                 fill="none"
               ></path>
@@ -158,7 +158,7 @@ export default function Hero() {
               className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
             >
               AI-powered document processing that extracts, understands, and
-              structures information from any document—automatically.
+              structures information from any document automatically.
             </motion.p>
 
             {/* CTA Buttons */}

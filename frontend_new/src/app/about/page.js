@@ -42,7 +42,7 @@ export default function AboutPage() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-accent-blue/5 to-transparent pointer-events-none -z-10"></div>
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <motion.h1 
+              <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="text-6xl md:text-8xl font-bold mb-8 text-text-primary"
@@ -53,7 +53,7 @@ export default function AboutPage() {
                   Document IQ
                 </span>
               </motion.h1>
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
@@ -72,20 +72,20 @@ export default function AboutPage() {
               <div className="bg-background-card rounded-[3rem] p-12 md:p-20 border border-border shadow-elevated relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-accent-blue/5 rounded-full blur-3xl"></div>
                 <div className="relative z-10">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-8 text-text-primary">
+                  <h2 className="text-4xl md:text-5xl font-bold mb-8 text-text-primary">
                     Our Story
-                    </h2>
-                    <div className="space-y-8 text-lg md:text-xl text-text-secondary leading-relaxed">
+                  </h2>
+                  <div className="space-y-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                     <p>
-                        We started NiyamR Flow after years of seeing organizations struggle with the bottleneck of manual document processing. From finance to healthcare, valuable data was being trapped in static files, requiring thousands of man-hours to extract and analyze.
+                      We started NiyamR Flow after years of seeing organizations struggle with the bottleneck of manual document processing. From finance to healthcare, valuable data was being trapped in static files, requiring thousands of man-hours to extract and analyze.
                     </p>
                     <p>
-                        Our team of AI researchers and engineers set out to build a platform that doesn't just "read" text, but truly understands the context, structure, and relationships within documents.
+                      Our team of AI researchers and engineers set out to build a platform that doesn't just "read" text, but truly understands the context, structure, and relationships within documents.
                     </p>
                     <p>
-                        Today, NiyamR Flow is the intelligence engine behind mission-critical workflows for organizations worldwide. We're not just automating tasks—we're enabling a new era of data-driven decision making.
+                      Today, NiyamR Flow is the intelligence engine behind mission-critical workflows for organizations worldwide. We're not just automating tasks we're enabling a new era of data-driven decision making.
                     </p>
-                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function AboutPage() {
 
         {/* CTA Section */}
         <section className="py-40 relative overflow-hidden">
-           <div className="absolute inset-0 bg-accent-blue/5 -z-10"></div>
+          <div className="absolute inset-0 bg-accent-blue/5 -z-10"></div>
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-5xl md:text-6xl font-bold mb-8 text-text-primary">
