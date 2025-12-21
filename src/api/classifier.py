@@ -3,6 +3,7 @@ from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, HTTPException, Form
 import shutil
 import os
+from src.core.auth import verify_key
 from src.classify_raw.classify import classify_highest_class
 router = APIRouter()
 

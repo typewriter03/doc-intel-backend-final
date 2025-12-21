@@ -38,7 +38,22 @@ class SupabaseService:
             .eq("user_id", user_id)\
             .order("created_at", desc=True)\
             .execute()
-        return response.data
+        
+        workflows = response.data
+        
+        # Enrich with Doc Counts
+        # (Inefficient N+1 query but safe without guaranteed FKs)
+        for wf in workflows:
+            try:
+                count_res = self.supabase.table("document_contents")\
+                    .select("id", count="exact")\
+                    .eq("workflow_id", wf['id'])\
+                    .execute()
+                wf['docs'] = count_res.count
+            except:
+                wf['docs'] = 0
+                
+        return workflows
 
     def verify_ownership(self, workflow_id: str, user_id: str) -> bool:
         """
@@ -82,4 +97,22 @@ class SupabaseService:
             .eq("workflow_id", workflow_id)\
             .execute()
         return response.data
+
+    def save_graph(self, workflow_id: str, graph_data: dict):
+        """Saves the generated graph JSON to Supabase."""
+        data = {
+            "workflow_id": workflow_id,
+            "graph_data": graph_data,
+            # If you want to overwrite previous graphs for this workflow
+        }
+        # We assume a table 'workflow_graphs' exists (I will give SQL below)
+        self.supabase.table("workflow_graphs").upsert(data, on_conflict="workflow_id").execute()
+
+    def get_saved_graph(self, workflow_id: str):
+        """Fetches an existing graph if it exists."""
+        res = self.supabase.table("workflow_graphs")\
+            .select("graph_data")\
+            .eq("workflow_id", workflow_id)\
+            .execute()
+        return res.data[0]["graph_data"] if res.data else None
 db_service = SupabaseService()

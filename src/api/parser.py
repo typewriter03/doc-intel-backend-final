@@ -3,6 +3,7 @@ import tempfile
 from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, HTTPException, Form, BackgroundTasks
 from fastapi.responses import FileResponse
+from src.core.auth import verify_key
 
 from src.core.parser_pdf import parse_pdf 
 from src.core.parser_csv import csv_parser_function

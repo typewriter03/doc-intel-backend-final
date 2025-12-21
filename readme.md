@@ -1,5 +1,7 @@
 # DocIntel - Advanced Document Intelligence Platform
 
+DONT FORGET THE MODEL FOLDER after cloning
+
 AI-powered document processing and tax compliance assistant with RAG capabilities.
 
 ## Features

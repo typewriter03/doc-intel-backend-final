@@ -244,7 +244,7 @@ def perform_reconciliation(workflow_id: str):
         "date": "YYYY-MM-DD",
         "amount": 120.50,
         "description": "Uber Trip",
-        "issue": "MISSING PROOF ⚠️" (In Ledger, no Invoice) OR "UNRECORDED ❌" (Have Invoice, not in Ledger),
+        "issue": "MISSING PROOF ⚠️" OR "UNRECORDED ❌" ,
         "notes": "Found on Ledger Page 4, Row 12."
       }}
     ]

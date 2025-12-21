@@ -89,6 +89,7 @@ def process_and_index_document(workflow_id: str, file_content: bytes, filename: 
 
         # 4. Convert to Markdown (The Fix)
         md_text = clean_and_convert_html(raw_html)
+        print(f"💾 Saving full text of {filename} to DB...")
         db_service.save_document_content(workflow_id, filename, md_text)
 
         # 5. Chunking (Aggregator Strategy)

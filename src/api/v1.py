@@ -6,7 +6,14 @@ from pydantic import BaseModel
 from src.services.database import db_service
 from src.core.auth import get_current_user  # The new security dependency
 from src.workflows.ingest import process_and_index_document
-from src.workflows.chat import retrieve_and_chat, perform_reconciliation
+from src.workflows.chat import (
+    retrieve_and_chat, 
+    perform_reconciliation, 
+    analyze_expense_intelligence, 
+    perform_year_end_review
+)
+from src.workflows.graph_extractor import GraphExtractor
+from src.models.graph import GraphResponse
 
 router = APIRouter(prefix="/v1", tags=["Workflows"])
 
@@ -31,6 +38,7 @@ class WorkflowItem(BaseModel):
     name: str
     created_at: Union[str, None]
     status: Union[str, None]
+    docs: int = 0
 
 # --- Endpoints ---
 
@@ -140,3 +148,21 @@ async def audit_year_end(
 
     report = perform_year_end_review(req.workflow_id)
     return {"status": "success", "report": report}
+
+@router.get("/workflow/graph", response_model=GraphResponse)
+async def get_workflow_graph(
+    workflow_id: str,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Generates or fetches the Visual Audit Graph.
+    """
+    # 1. Security
+    if not db_service.verify_ownership(workflow_id, user_id):
+        raise HTTPException(status_code=403, detail="Access Denied")
+
+    # 2. Extract
+    extractor = GraphExtractor()
+    graph_data = await extractor.extract_graph(workflow_id)
+    
+    return graph_data

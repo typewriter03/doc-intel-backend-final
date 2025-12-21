@@ -33,7 +33,18 @@ def get_current_user(creds: HTTPAuthorizationCredentials = Security(security)) -
         decoded_token = auth.verify_id_token(token)
         return decoded_token["uid"]
     except Exception as e:
+        print(f"❌ Auth Error: {str(e)}")
         raise HTTPException(
             status_code=401,
             detail=f"Invalid or expired token: {str(e)}"
         )
+
+def verify_key(key: str) -> bool:
+    """
+    Legacy API Key verification. 
+    Currently permissive to allow frontend integration.
+    """
+    if not key:
+        return False
+    # logic could compare against settings.API_KEY
+    return True
