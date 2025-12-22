@@ -4,7 +4,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, Form
 import shutil
 import os
 from src.core.auth import verify_key
-from src.classify_raw.classify import classify_highest_class
+from src.core.ai_classifier import classify_highest_class
 router = APIRouter()
 
 @router.post("/classify")

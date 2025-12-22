@@ -115,4 +115,21 @@ class SupabaseService:
             .eq("workflow_id", workflow_id)\
             .execute()
         return res.data[0]["graph_data"] if res.data else None
+
+    def delete_workflow(self, workflow_id: str, user_id: str) -> bool:
+        """Deletes a workflow and implicitly its related data if cascade is on."""
+        if not self.supabase: return False
+        
+        # Verify ownership first (redundant but safe)
+        if not self.verify_ownership(workflow_id, user_id):
+            return False
+
+        # Delete the workflow
+        self.supabase.table("workflows")\
+            .delete()\
+            .eq("id", workflow_id)\
+            .eq("user_id", user_id)\
+            .execute()
+            
+        return True
 db_service = SupabaseService()

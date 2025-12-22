@@ -38,6 +38,16 @@ export const api = {
         return res.json();
     },
 
+    deleteWorkflow: async (workflowId) => {
+        const headers = await getHeaders();
+        const res = await fetch(`${API_BASE_URL}/v1/workflow/${workflowId}`, {
+            method: 'DELETE',
+            headers,
+        });
+        if (!res.ok) throw new Error('Failed to delete workflow');
+        return res.json();
+    },
+
     // --- Document Intelligence Workflows ---
 
     // Documents

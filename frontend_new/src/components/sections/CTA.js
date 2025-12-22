@@ -48,7 +48,7 @@ export default function CTA() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10"
           >
-            Join thousands of enterprises already using our AI-powered platform
+            Join thousands of enterprises already using our AI powered platform
             to process millions of documents with unprecedented accuracy.
           </motion.p>
 
@@ -73,7 +73,7 @@ export default function CTA() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-8 text-sm text-text-muted"
           >
-            No credit card required · 14-day free trial · Cancel anytime
+
           </motion.p>
         </motion.div>
       </div>

@@ -72,6 +72,20 @@ async def list_workflows(user_id: str = Depends(get_current_user)):  # <--- SECU
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.delete("/workflow/{workflow_id}")
+async def delete_workflow(
+    workflow_id: str,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Deletes a workspace and all its data.
+    """
+    success = db_service.delete_workflow(workflow_id, user_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Workflow not found or access denied")
+    
+    return {"status": "success", "message": "Workflow deleted successfully"}
+
 @router.post("/ingest")
 async def ingest(
     workflow_id: str = Form(...),

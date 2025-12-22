@@ -54,3 +54,21 @@ output_image/
 temp/
 tmp/
 *.log
+
+# Frontend / Next.js Extended
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+coverage/
+.vercel/
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+project_export.zip
+project_export.tar.gz
+.pnpm-debug.log*
+yarn-debug.log*

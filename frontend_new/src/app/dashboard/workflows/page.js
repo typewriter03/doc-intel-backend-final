@@ -9,7 +9,8 @@ import {
    ChevronRight,
    GitBranch,
    Calendar,
-   Loader2
+   Loader2,
+   Trash2
 } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuth } from '@/context/AuthContext';
@@ -51,6 +52,22 @@ export default function WorkflowsPage() {
             fetchWorkflows();
          } catch (e) {
             alert("Failed to create workflow");
+         }
+      }
+   };
+
+   // Delete Workflow
+   const handleDeleteWorkflow = async (e, id, name) => {
+      e.stopPropagation();
+      if (confirm(`Are you sure you want to delete workspace "${name}"? This action cannot be undone.`)) {
+         try {
+            await api.deleteWorkflow(id);
+            // Optimistic update or refresh
+            setWorkflows(workflows.filter(w => w.id !== id));
+            if (activeGraph?.id === id) setActiveGraph(null);
+         } catch (err) {
+            console.error(err);
+            alert("Failed to delete workspace");
          }
       }
    };
@@ -157,8 +174,12 @@ export default function WorkflowsPage() {
                         <div className="p-3 rounded-xl bg-accent-blue/10 text-accent-blue">
                            <Layers className="w-6 h-6" />
                         </div>
-                        <button className="p-2 hover:bg-background-subtle rounded-lg transition-all">
-                           <MoreVertical className="w-5 h-5 text-text-secondary" />
+                        <button
+                           onClick={(e) => handleDeleteWorkflow(e, wf.id, wf.name)}
+                           className="p-2 hover:bg-red-500/10 text-text-secondary hover:text-red-500 rounded-lg transition-all"
+                           title="Delete Workspace"
+                        >
+                           <Trash2 className="w-5 h-5" />
                         </button>
                      </div>
 

@@ -157,7 +157,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
             >
-              AI-powered document processing that extracts, understands, and
+              AI powered document processing that extracts, understands, and
               structures information from any document automatically.
             </motion.p>
 

@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "NiyamR Flow - Document Intelligence Platform",
   description:
-    "AI-powered document processing that extracts, understands, and structures information from any document automatically.",
+    "AI powered document processing that extracts, understands, and structures information from any document automatically.",
   keywords: [
     "document processing",
     "AI document analysis",
@@ -20,7 +20,7 @@ export const metadata = {
   openGraph: {
     title: "NiyamR Flow - Document Intelligence Platform",
     description:
-      "AI-powered document processing that extracts, understands, and structures information from any document automatically.",
+      "AI powered document processing that extracts, understands, and structures information from any document automatically.",
     type: "website",
   },
 };
