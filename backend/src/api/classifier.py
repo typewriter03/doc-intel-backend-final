@@ -12,11 +12,15 @@ async def classify_file(file: UploadFile = File(..., description="The HTML file 
     """
     Accepts an HTML file, runs the classifier, and returns the highest probability class.
     """
+    print(f"📥 Received file for classification: {file.filename}")
+    
     if not file.filename.endswith(('.html', '.htm')):
+        print(f"❌ Invalid file type: {file.filename}")
         raise HTTPException(status_code=400, detail="Only HTML files are supported.")
 
     if not verify_key(auth_key):
         # 401 Unauthorized is the correct response for authentication failure
+        print(f"❌ Invalid auth key provided")
         raise HTTPException(status_code=401, detail="Invalid authentication key")
 
     # Create a temporary file to save the uploaded content
@@ -32,9 +36,11 @@ async def classify_file(file: UploadFile = File(..., description="The HTML file 
         # Run classification
         # get_highest_class expects a file path
         classification = classify_highest_class(tmp_path)
+        print(f"✅ Classification successful: {classification}")
         return {"filename": file.filename, "classification": classification}
 
     except Exception as e:
+        print(f"❌ Classification error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Classification failed: {str(e)}")
     
     finally:

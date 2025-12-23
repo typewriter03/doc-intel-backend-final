@@ -167,7 +167,17 @@ export const api = {
             method: 'POST',
             body: formData,
         });
-        if (!res.ok) throw new Error('Legacy classify failed');
+        if (!res.ok) {
+            const errorText = await res.text();
+            let errorDetail = errorText;
+            try {
+                const errorJson = JSON.parse(errorText);
+                errorDetail = errorJson.detail || errorText;
+            } catch (e) {
+                // If not JSON, use the text as-is
+            }
+            throw new Error(`Legacy classify failed (${res.status}): ${errorDetail}`);
+        }
         return res.json();
     }
 };
