@@ -10,14 +10,14 @@ function FeatureCard({ feature, index, isInView }) {
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ 
-        duration: 0.6, 
+      transition={{
+        duration: 0.6,
         delay: index * 0.1,
         ease: [0.21, 0.47, 0.32, 0.98]
       }}
       className="group h-full"
     >
-      <div className="relative bg-background-card backdrop-blur-sm rounded-2xl p-8 border border-border hover:border-accent-blue/50 shadow-soft hover:shadow-elevated transition-all duration-500 hover:-translate-y-1 h-full flex flex-col">
+      <div className="relative bg-background-card backdrop-blur-sm rounded-3xl p-8 border border-border hover:border-accent-blue/50 shadow-soft hover:shadow-elevated transition-all duration-500 hover:-translate-y-1 h-full flex flex-col">
         {/* Hover gradient overlay */}
         <div className="absolute inset-0 rounded-2xl bg-accent-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
 

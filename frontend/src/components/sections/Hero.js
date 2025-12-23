@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight, Play, Sparkles } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Hero() {
@@ -73,7 +73,7 @@ export default function Hero() {
         <div className="bg-gradient-to-t from-background from-1% to-transparent to-30% absolute inset-0"></div>
       </div>
 
-      <section className="relative z-10 flex flex-col items-start md:items-center py-24 md:py-32 overflow-hidden">
+      <section className="relative z-10 flex flex-col items-start md:items-center py-16 md:py-24 overflow-hidden">
         {/* Subtle gradient overlay */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-r from-accent-blue/10 to-accent-blue-soft/10 blur-3xl rounded-full"></div>
@@ -128,7 +128,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background-card border border-border shadow-soft">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full  border border-border shadow-soft">
                 <Sparkles className="w-4 h-4 text-accent-blue" />
                 <span className="text-sm font-medium text-text-secondary">
                   Powered by Advanced AI
@@ -157,8 +157,8 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
             >
-              AI powered document processing that extracts, understands, and
-              structures information from any document automatically.
+              AI-powered document processing that extracts, understands, and
+              structures information from any document—automatically.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -168,12 +168,40 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
             >
-              <Link href="/dashboard" className="bg-button-primary hover:bg-button-primary/90 text-button-primary-text px-10 h-14 rounded-xl text-lg font-bold group shadow-elevated transition-all hover:scale-105 flex items-center gap-3">
+              <button className="bg-button-primary hover:bg-button-primary/90 text-button-primary-text px-8 h-12 rounded-lg text-base group shadow-elevated transition-all hover:scale-105 flex items-center gap-2">
                 Get Started Free
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button className="px-8 h-12 rounded-lg text-base border border-border hover:bg-background-subtle group transition-colors flex items-center gap-2">
+                <Play className="w-5 h-5" />
+                Watch Demo
+              </button>
             </motion.div>
+
+
           </div>
+
+          {/* Trusted by Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="pt-12"
+          >
+            <p className="text-sm text-text-muted mb-6 text-center opacity-100">
+              Trusted by forward-thinking enterprises
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-60">
+              {["ACME", "GLOBEX", "INITECH", "UMBRELLA", "WAYNE"].map((company) => (
+                <span
+                  key={company}
+                  className="text-base md:text-lg font-semibold tracking-wider text-text-muted"
+                >
+                  {company}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
     </>
