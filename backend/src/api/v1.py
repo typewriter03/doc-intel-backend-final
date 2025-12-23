@@ -163,6 +163,19 @@ async def audit_year_end(
     report = perform_year_end_review(req.workflow_id)
     return {"status": "success", "report": report}
 
+@router.get("/analytics")
+async def get_analytics(
+    days: int = 7,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Returns analytics for the logged-in user's dashboard.
+    """
+    try:
+        return db_service.get_user_analytics(user_id, days)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/workflow/graph", response_model=GraphResponse)
 async def get_workflow_graph(
     workflow_id: str,

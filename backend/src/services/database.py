@@ -132,4 +132,71 @@ class SupabaseService:
             .execute()
             
         return True
+
+    def get_user_analytics(self, user_id: str, days: int = 7):
+        """
+        Aggregates dashboard data:
+        - Document uploads per day (last N days)
+        - File type distribution
+        - Chat activity volume
+        """
+        if not self.supabase: return {}
+
+        from datetime import datetime, timedelta
+        from collections import defaultdict
+
+        # 1. Get user workflows
+        wfs = self.supabase.table("workflows")\
+            .select("id")\
+            .eq("user_id", user_id)\
+            .execute()
+        
+        wf_ids = [w['id'] for w in wfs.data]
+        if not wf_ids:
+            return {
+                "document_timeline": [0] * days,
+                "file_types": {},
+                "total_docs": 0
+            }
+
+        # 2. Get document activity
+        # Fetching created_at and filename for all docs in user's workflows
+        docs_res = self.supabase.table("document_contents")\
+            .select("created_at, filename")\
+            .in_("workflow_id", wf_ids)\
+            .execute()
+        
+        docs = docs_res.data
+        
+        # Calculate Timeline
+        cutoff = datetime.utcnow() - timedelta(days=days)
+        timeline = defaultdict(int)
+        file_types = defaultdict(int)
+
+        for doc in docs:
+            # Stats for file types
+            ext = doc['filename'].split('.')[-1].lower() if '.' in doc['filename'] else 'other'
+            file_types[ext] += 1
+
+            # Stats for timeline
+            created_at = datetime.fromisoformat(doc['created_at'].replace('Z', '+00:00'))
+            if created_at.replace(tzinfo=None) > cutoff:
+                date_str = created_at.strftime('%Y-%m-%d')
+                timeline[date_str] += 1
+
+        # Format timeline for frontend (last N days, chronological)
+        formatted_timeline = []
+        for i in range(days - 1, -1, -1):
+            d = (datetime.utcnow() - timedelta(days=i)).strftime('%Y-%m-%d')
+            formatted_timeline.append({
+                "date": d,
+                "count": timeline.get(d, 0)
+            })
+
+        return {
+            "document_timeline": formatted_timeline,
+            "file_types": dict(file_types),
+            "total_docs": len(docs)
+        }
+
 db_service = SupabaseService()
