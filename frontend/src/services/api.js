@@ -87,6 +87,16 @@ export const api = {
         return res.json();
     },
 
+    getChatHistory: async (workflowId) => {
+        const headers = await getHeaders();
+        const res = await fetch(`${API_BASE_URL}/v1/workflow/${workflowId}/chat-history`, {
+            method: 'GET',
+            headers,
+        });
+        if (!res.ok) throw new Error('Failed to fetch chat history');
+        return res.json();
+    },
+
     // Reconciliation
     reconcile: async (workflowId) => {
         const headers = await getHeaders();

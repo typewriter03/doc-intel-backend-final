@@ -23,6 +23,7 @@ export default function ChatPage() {
    const [isTyping, setIsTyping] = useState(false);
    const [workflows, setWorkflows] = useState([]);
    const [activeWorkflowId, setActiveWorkflowId] = useState(null);
+   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
 
    // Fetch workflows on mount
    useEffect(() => {
@@ -39,6 +40,42 @@ export default function ChatPage() {
       }
       init();
    }, [user]);
+
+   // Fetch history when workflow changes
+   useEffect(() => {
+      async function loadHistory() {
+         if (activeWorkflowId) {
+            setIsLoadingHistory(true);
+            try {
+               const history = await api.getChatHistory(activeWorkflowId);
+               const formattedMessages = history.map(item => [
+                  {
+                     id: `u-${item.id}`,
+                     role: 'user',
+                     text: item.user_query,
+                     time: new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                  },
+                  {
+                     id: `b-${item.id}`,
+                     role: 'assistant',
+                     text: item.bot_response,
+                     time: new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                  }
+               ]).flat();
+
+               setMessages([
+                  { id: 1, role: 'assistant', text: "Hello! I'm your AI Document Assistant. Select a workflow context to start chatting.", time: 'Now' },
+                  ...formattedMessages
+               ]);
+            } catch (e) {
+               console.error("Failed to load chat history", e);
+            } finally {
+               setIsLoadingHistory(false);
+            }
+         }
+      }
+      loadHistory();
+   }, [activeWorkflowId]);
 
    const handleSend = async () => {
       if (!input.trim() || !activeWorkflowId) return;
@@ -115,8 +152,13 @@ export default function ChatPage() {
 
             {/* Messages Window */}
             <div className="flex-1 overflow-y-auto p-8 space-y-8">
+               {isLoadingHistory && (
+                  <div className="flex justify-center p-4">
+                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-blue"></div>
+                  </div>
+               )}
                <AnimatePresence>
-                  {messages.map((msg) => (
+                  {!isLoadingHistory && messages.map((msg) => (
                      <motion.div
                         key={msg.id}
                         initial={{ opacity: 0, y: 10 }}

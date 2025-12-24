@@ -81,6 +81,18 @@ class SupabaseService:
             "timestamp": datetime.utcnow().isoformat()
         }
         self.supabase.table("chat_history").insert(data).execute()
+
+    def get_chat_history(self, workflow_id: str):
+        """Fetches chat history for a specific workflow."""
+        if not self.supabase: return []
+        
+        response = self.supabase.table("chat_history")\
+            .select("*")\
+            .eq("workflow_id", workflow_id)\
+            .order("timestamp", desc=False)\
+            .execute()
+        
+        return response.data
     
     def save_document_content(self, workflow_id: str, filename: str, content: str):
         """Saves full text during ingestion."""

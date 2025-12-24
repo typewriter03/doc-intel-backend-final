@@ -14,6 +14,12 @@ llm = ChatOpenAI(
     api_key=settings.OPENAI_API_KEY
 )
 
+llm_cheap = ChatOpenAI(
+    temperature=0, 
+    model_name="gpt-4o-mini",
+    api_key=settings.OPENAI_API_KEY
+)
+
 # --- 1. CHAT (Standard) ---
 def retrieve_and_chat(workflow_id: str, query: str, output_format: str = "text"):
     

@@ -86,6 +86,23 @@ async def delete_workflow(
     
     return {"status": "success", "message": "Workflow deleted successfully"}
 
+@router.get("/workflow/{workflow_id}/chat-history")
+async def get_chat_history(
+    workflow_id: str,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Fetches stored chat messages for a workspace.
+    """
+    if not db_service.verify_ownership(workflow_id, user_id):
+        raise HTTPException(status_code=403, detail="Access Denied")
+    
+    try:
+        history = db_service.get_chat_history(workflow_id)
+        return history
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post("/ingest")
 async def ingest(
     workflow_id: str = Form(...),
