@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuth } from '@/context/AuthContext';
+import { useWorkflow } from '@/context/WorkflowContext';
 
 const auditTools = [
    {
@@ -51,26 +52,10 @@ const auditTools = [
 
 export default function AuditsPage() {
    const { user } = useAuth();
-   const [workflows, setWorkflows] = useState([]);
-   const [selectedWorkflowId, setSelectedWorkflowId] = useState('');
+   const { workflows, activeWorkflowId: selectedWorkflowId, setActiveWorkflowId: setSelectedWorkflowId } = useWorkflow();
    const [runningAudit, setRunningAudit] = useState(null); // id of running audit
    const [auditResult, setAuditResult] = useState(null);
 
-   // Fetch workflows
-   useEffect(() => {
-      async function init() {
-         if (user) {
-            try {
-               const wfs = await api.getWorkflows();
-               setWorkflows(wfs);
-               if (wfs.length > 0) setSelectedWorkflowId(wfs[0].id);
-            } catch (e) {
-               console.error("Failed to load workflows", e);
-            }
-         }
-      }
-      init();
-   }, [user]);
 
    const handleRunAudit = async (toolI) => {
       if (!selectedWorkflowId) {

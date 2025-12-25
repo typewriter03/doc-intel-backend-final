@@ -17,30 +17,14 @@ import {
 } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuth } from '@/context/AuthContext';
+import { useWorkflow } from '@/context/WorkflowContext';
 
 export default function DocumentsPage() {
    const { user } = useAuth();
+   const { workflows, activeWorkflowId: selectedWorkflowId, setActiveWorkflowId: setSelectedWorkflowId } = useWorkflow();
    const [isDragging, setIsDragging] = useState(false);
-   const [workflows, setWorkflows] = useState([]);
-   const [selectedWorkflowId, setSelectedWorkflowId] = useState('');
    const [uploadStatus, setUploadStatus] = useState(null); // 'uploading', 'success', 'error'
    const [statusMessage, setStatusMessage] = useState('');
-
-   // Fetch workflows
-   useEffect(() => {
-      async function init() {
-         if (user) {
-            try {
-               const wfs = await api.getWorkflows();
-               setWorkflows(wfs);
-               if (wfs.length > 0) setSelectedWorkflowId(wfs[0].id);
-            } catch (e) {
-               console.error("Failed to load workflows", e);
-            }
-         }
-      }
-      init();
-   }, [user]);
 
    const handleDrop = async (e) => {
       e.preventDefault();

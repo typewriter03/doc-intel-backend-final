@@ -14,35 +14,26 @@ import {
 } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuth } from '@/context/AuthContext';
+import { useWorkflow } from '@/context/WorkflowContext';
 import GraphVisualizer from '@/components/ui/GraphVisualizer';
 import sampleGraphData from '@/data/sampleGraph.json';
 import invoiceFlowData from '@/data/invoiceFlowGraph.json';
 
 export default function WorkflowsPage() {
    const { user } = useAuth();
-   const [workflows, setWorkflows] = useState([]);
+   const { workflows, setActiveWorkflowId, refreshWorkflows } = useWorkflow();
    const [activeGraph, setActiveGraph] = useState(null); // { id, name, data }
    const [isFullScreen, setIsFullScreen] = useState(false);
    const [graphLoading, setGraphLoading] = useState(false);
 
    const [loading, setLoading] = useState(true);
 
-   // Fetch Workflows
-   const fetchWorkflows = async () => {
-      if (!user) return;
-      setLoading(true);
-      try {
-         const wfs = await api.getWorkflows();
-         setWorkflows(wfs);
-      } catch (e) {
-         console.error(e);
-      } finally {
-         setLoading(false);
-      }
-   };
+   // Create Workflow
 
    useEffect(() => {
-      fetchWorkflows();
+      if (user) {
+         setLoading(false); // Already handled by context
+      }
    }, [user]);
 
    // Create Workflow
@@ -51,7 +42,7 @@ export default function WorkflowsPage() {
       if (name) {
          try {
             await api.createWorkflow(name);
-            fetchWorkflows();
+            await refreshWorkflows();
          } catch (e) {
             alert("Failed to create workflow");
          }
@@ -77,6 +68,7 @@ export default function WorkflowsPage() {
    // Fetch Graph
    const fetchGraph = async (wf) => {
       setGraphLoading(true);
+      setActiveWorkflowId(wf.id); // Set shared active workflow
       try {
          const data = await api.getGraph(wf.id);
          setActiveGraph({ id: wf.id, name: wf.name, data });

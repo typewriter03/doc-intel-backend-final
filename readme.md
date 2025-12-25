@@ -157,7 +157,7 @@ Once the backend is running, access interactive API docs:
 │   │   ├── parser.py      # Legacy parser endpoint
 │   │   └── classifier.py  # Legacy classifier endpoint
 │   ├── core/              # Core utilities
-│   │   ├── config.py      # Configuration
+│   │   ├──       # Configuration
 │   │   ├── parser_*.py    # Document parsers
 │   │   └── utils.py       # Helper functions
 │   ├── services/          # External services

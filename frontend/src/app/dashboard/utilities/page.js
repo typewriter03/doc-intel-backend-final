@@ -3,8 +3,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FileUp, Download, Code, Loader2, Wrench, FileArchive, FileJson } from 'lucide-react';
 import { api } from '@/services/api';
+import { useWorkflow } from '@/context/WorkflowContext';
 
 export default function UtilitiesPage() {
+    const { activeWorkflowId, workflows } = useWorkflow();
+    const activeWorkflow = workflows.find(w => w.id === activeWorkflowId);
+
     const [parserLoading, setParserLoading] = useState(false);
     const [classifierLoading, setClassifierLoading] = useState(false);
     const [classifierResult, setClassifierResult] = useState(null);
@@ -60,12 +64,23 @@ export default function UtilitiesPage() {
     return (
         <div className="space-y-10">
             {/* Header */}
-            <div>
-                <h1 className="text-3xl font-bold text-text-primary mb-2 flex items-center gap-3">
-                    <Wrench className="w-8 h-8 text-accent-blue" />
-                    Utilities & Tools
-                </h1>
-                <p className="text-text-secondary">Access legacy file processing tools for raw document operations.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <h1 className="text-3xl font-bold text-text-primary mb-2 flex items-center gap-3">
+                        <Wrench className="w-8 h-8 text-accent-blue" />
+                        Utilities & Tools
+                    </h1>
+                    <p className="text-text-secondary">Access legacy file processing tools for raw document operations.</p>
+                </div>
+
+                {activeWorkflow && (
+                    <div className="flex items-center gap-3 bg-background-card border border-border px-4 py-2 rounded-xl shadow-soft">
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <div className="text-sm font-bold text-text-primary truncate max-w-[200px]">
+                            Context: {activeWorkflow.name}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">

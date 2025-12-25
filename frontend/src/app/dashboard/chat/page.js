@@ -13,32 +13,60 @@ import {
 } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuth } from '@/context/AuthContext';
+import { useWorkflow } from '@/context/WorkflowContext';
 
 export default function ChatPage() {
    const { user } = useAuth();
+   const { workflows, activeWorkflowId, setActiveWorkflowId } = useWorkflow();
    const [messages, setMessages] = useState([
       { id: 1, role: 'assistant', text: "Hello! I'm your AI Document Assistant. Select a workflow context to start chatting.", time: 'Now' }
    ]);
    const [input, setInput] = useState('');
    const [isTyping, setIsTyping] = useState(false);
-   const [workflows, setWorkflows] = useState([]);
-   const [activeWorkflowId, setActiveWorkflowId] = useState(null);
 
-   // Fetch workflows on mount
+   // Fetch history when active workflow changes
    useEffect(() => {
-      async function init() {
-         if (user) {
+      async function loadHistory() {
+         if (activeWorkflowId) {
             try {
-               const wfs = await api.getWorkflows();
-               setWorkflows(wfs);
-               if (wfs.length > 0) setActiveWorkflowId(wfs[0].id);
+               const history = await api.getChatHistory(activeWorkflowId);
+               const formattedMessages = [];
+
+               // Always start with the system greeting
+               formattedMessages.push({
+                  id: 'system-1',
+                  role: 'assistant',
+                  text: "Hello! I'm your AI Document Assistant. How can I help you with this workflow today?",
+                  time: 'Live'
+               });
+
+               history.forEach((h, idx) => {
+                  formattedMessages.push({
+                     id: `u-${idx}`,
+                     role: 'user',
+                     text: h.user_query,
+                     time: new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                  });
+                  formattedMessages.push({
+                     id: `a-${idx}`,
+                     role: 'assistant',
+                     text: h.bot_response,
+                     time: new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                  });
+               });
+
+               setMessages(formattedMessages);
             } catch (e) {
-               console.error("Failed to load workflows", e);
+               console.error("Failed to load chat history", e);
             }
+         } else {
+            setMessages([
+               { id: 1, role: 'assistant', text: "Hello! I'm your AI Document Assistant. Select a workflow context to start chatting.", time: 'Now' }
+            ]);
          }
       }
-      init();
-   }, [user]);
+      loadHistory();
+   }, [activeWorkflowId]);
 
    const handleSend = async () => {
       if (!input.trim() || !activeWorkflowId) return;

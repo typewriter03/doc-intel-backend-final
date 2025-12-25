@@ -132,6 +132,26 @@ export const api = {
         return res.json();
     },
 
+    getChatHistory: async (workflowId) => {
+        const headers = await getHeaders();
+        const res = await fetch(`${API_BASE_URL}/v1/workflow/${workflowId}/chat-history`, {
+            method: 'GET',
+            headers,
+        });
+        if (!res.ok) throw new Error('Failed to fetch chat history');
+        return res.json();
+    },
+
+    getAnalytics: async (days = 7) => {
+        const headers = await getHeaders();
+        const res = await fetch(`${API_BASE_URL}/v1/analytics?days=${days}`, {
+            method: 'GET',
+            headers,
+        });
+        if (!res.ok) throw new Error('Failed to fetch analytics');
+        return res.json();
+    },
+
     // --- Legacy Tools ---
     // These might use basic auth or api key in the future, but currently keeping consistent
     legacyParse: async (file) => {

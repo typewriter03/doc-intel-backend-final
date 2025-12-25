@@ -72,6 +72,23 @@ async def list_workflows(user_id: str = Depends(get_current_user)):  # <--- SECU
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/workflow/{workflow_id}/chat-history")
+async def get_chat_history(
+    workflow_id: str,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Fetches stored chat messages for a workspace.
+    """
+    if not db_service.verify_ownership(workflow_id, user_id):
+        raise HTTPException(status_code=403, detail="Access Denied")
+    
+    try:
+        history = db_service.get_chat_history(workflow_id)
+        return history
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.delete("/workflow/{workflow_id}")
 async def delete_workflow(
     workflow_id: str,
@@ -162,6 +179,19 @@ async def audit_year_end(
 
     report = perform_year_end_review(req.workflow_id)
     return {"status": "success", "report": report}
+
+@router.get("/analytics")
+async def get_analytics(
+    days: int = 7,
+    user_id: str = Depends(get_current_user)
+):
+    """
+    Returns analytics for the logged-in user's dashboard.
+    """
+    try:
+        return db_service.get_user_analytics(user_id, days)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/workflow/graph", response_model=GraphResponse)
 async def get_workflow_graph(

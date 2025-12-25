@@ -1,7 +1,14 @@
 'use client';
 
 import { AuthProvider } from '../context/AuthContext';
+import { WorkflowProvider } from '../context/WorkflowContext';
 
 export function Providers({ children }) {
-    return <AuthProvider>{children}</AuthProvider>;
+    return (
+        <AuthProvider>
+            <WorkflowProvider>
+                {children}
+            </WorkflowProvider>
+        </AuthProvider>
+    );
 }
