@@ -1,0 +1,175 @@
+{
+    "nodes": [
+        {
+            "id": "user_center",
+            "type": "person",
+            "label": "Client (You)",
+            "data": {
+                "role": "owner",
+                "status": null,
+                "amount": null,
+                "date": null,
+                "document_type": null
+            }
+        },
+        {
+            "id": "doc_54",
+            "type": "document",
+            "label": "Current Account Statement",
+            "data": {
+                "role": null,
+                "status": null,
+                "amount": null,
+                "date": null,
+                "document_type": null,
+                "account_name": "AHMAD MUSTAPHA DAFER",
+                "closing_balance": 3100000000
+            }
+        },
+        {
+            "id": "rec_001",
+            "type": "document",
+            "label": "Receipt 001 ($170.0)",
+            "data": {
+                "role": null,
+                "status": "paid",
+                "amount": 170,
+                "date": null,
+                "document_type": null,
+                "vendor": "Amazon Mktplace"
+            }
+        },
+        {
+            "id": "rec_002",
+            "type": "document",
+            "label": "Receipt 002",
+            "data": {
+                "role": null,
+                "status": "mismatch",
+                "amount": null,
+                "date": null,
+                "document_type": null,
+                "vendor": "DEVONSHIRE II CO",
+                "amount_due": 200
+            }
+        },
+        {
+            "id": "rec_003",
+            "type": "document",
+            "label": "Receipt 003 ($12.98)",
+            "data": {
+                "role": null,
+                "status": "disallowable",
+                "amount": 12.98,
+                "date": null,
+                "document_type": null,
+                "vendor": "L A FITNESS"
+            }
+        },
+        {
+            "id": "rec_004",
+            "type": "document",
+            "label": "Receipt 004 ($57.48)",
+            "data": {
+                "role": null,
+                "status": "personal",
+                "amount": 57.48,
+                "date": null,
+                "document_type": null,
+                "vendor": "GIANT FOOD INC"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source": "doc_54",
+            "target": "IBM UK",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "doc_54",
+            "target": "Natwest Mtge Payt",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "doc_54",
+            "target": "UK Provident Fund",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "doc_54",
+            "target": "Microsoft UK",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "doc_54",
+            "target": "ExxonMobil Unlimited",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "doc_54",
+            "target": "British Petroleum",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "doc_54",
+            "target": "Shell BP",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "doc_54",
+            "target": "HSBC Dubai",
+            "label": "PAID_TO",
+            "style": {
+                "stroke": "#b1b1b7",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+            }
+        },
+        {
+            "source": "rec_002",
+            "target": "doc_54",
+            "label": "MISSING_PROOF",
+            "style": {
+                "stroke": "#ef4444",
+                "strokeWidth": 2,
+                "strokeDasharray": "5,5"
+            }
+        }
+    ]
+}

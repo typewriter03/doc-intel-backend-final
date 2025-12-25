@@ -1,0 +1,118 @@
+{
+    "nodes": [
+        {
+            "id": "inv_2024_001",
+            "type": "document",
+            "label": "Invoice #INV-2024-001",
+            "data": {
+                "amount": 5400.00,
+                "date": "2024-03-15"
+            }
+        },
+        {
+            "id": "vendor_acme",
+            "type": "vendor",
+            "label": "Acme Corp Solutions"
+        },
+        {
+            "id": "txn_9982",
+            "type": "transaction",
+            "label": "Bank Txn: $5,400.00"
+        },
+        {
+            "id": "po_555",
+            "type": "document",
+            "label": "PO #555-IT-SERVICES"
+        },
+        {
+            "id": "item_1",
+            "type": "item",
+            "label": "Cloud Hosting (Q1)"
+        },
+        {
+            "id": "item_2",
+            "type": "item",
+            "label": "Consulting Hrs (20)"
+        },
+        {
+            "id": "person_approver",
+            "type": "person",
+            "label": "Sarah Manager"
+        },
+        {
+            "id": "account_ops",
+            "type": "company",
+            "label": "Ops Budget"
+        }
+    ],
+    "edges": [
+        {
+            "source": "inv_2024_001",
+            "target": "vendor_acme",
+            "label": "ISSUED_BY",
+            "style": {
+                "stroke": "#60a5fa"
+            }
+        },
+        {
+            "source": "txn_9982",
+            "target": "inv_2024_001",
+            "label": "PAYS_FOR",
+            "style": {
+                "stroke": "#8b5cf6",
+                "strokeWidth": 2
+            }
+        },
+        {
+            "source": "inv_2024_001",
+            "target": "po_555",
+            "label": "MATCHES_PO",
+            "style": {
+                "stroke": "#10b981",
+                "strokeWidth": 2
+            }
+        },
+        {
+            "source": "inv_2024_001",
+            "target": "item_1",
+            "label": "ITEM",
+            "style": {
+                "stroke": "#cbd5e1"
+            }
+        },
+        {
+            "source": "inv_2024_001",
+            "target": "item_2",
+            "label": "ITEM",
+            "style": {
+                "stroke": "#cbd5e1"
+            }
+        },
+        {
+            "source": "person_approver",
+            "target": "inv_2024_001",
+            "label": "APPROVED",
+            "style": {
+                "stroke": "#10b981",
+                "strokeDasharray": "5,5"
+            }
+        },
+        {
+            "source": "inv_2024_001",
+            "target": "account_ops",
+            "label": "CHARGED_TO",
+            "style": {
+                "stroke": "#f59e0b"
+            }
+        },
+        {
+            "source": "txn_9982",
+            "target": "vendor_acme",
+            "label": "REMITTED_TO",
+            "style": {
+                "stroke": "#a78bfa",
+                "strokeDasharray": "2,2"
+            }
+        }
+    ]
+}
