@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+env/
+venv/
+.venv/
+
+
+#Node
+frontend/.next/
+frontend/node_modules/
+
+# Environment Variables & Secrets
+.env
+.env.local
+firebase_credentials.json
+google-credentials.json
+secrets.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project Specific
+src/classify_raw/model/
+output_image/
+temp/
+tmp/
+*.log
